@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/RealTayy/bamazon#readme",
   "dependencies": {
-    "mysql": "^2.15.0"
+    "colors": "^1.2.1",
+    "inquirer": "^5.2.0",
+    "mysql": "^2.15.0",
+    "table": "^4.0.3"
   }
 }
