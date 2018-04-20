@@ -4,6 +4,7 @@
 var { table } = require('table');
 
 module.exports = function displayItems(arr) {
+    if (arr === undefined || arr.length === 0) throw new Error("Array is empty or undefined");
 
     var options,
         data = [],

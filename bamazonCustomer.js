@@ -58,17 +58,19 @@ function promptChoices() {
                         }
                     }
                 ])
-                .then(function (answers) {
-                    // Attempts to buy item with user's answers
-                    buyItem(answers.itemID, answers.quantity_buying, results);
-                });
+                .then(
+                    function (answers) {
+                        // Attempts to buy item with user's answers
+                        buyItem(answers.itemID, answers.quantity_buying, results);
+                    }
+                );
         }
     )
 }
 
 function buyItem(itemID, quantity_buying, data) {
     var itemData = data[itemID - 1];
-    var numInStock = itemData.stock_quantity;
+    var numInStock = parseInt(itemData.stock_quantity);
     var newStock = numInStock - quantity_buying;
     var totalCost = (quantity_buying * parseFloat(itemData.price)).toFixed(2);
     connection.query(

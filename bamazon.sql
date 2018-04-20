@@ -6,7 +6,7 @@ USE bamazon;
 
 CREATE TABLE products (
 id int UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
-product_name VARCHAR(30) NOT NULL UNIQUE,
+product_name VARCHAR(30) NOT NULL,
 department_name VARCHAR(30) NOT NULL,
 price dec(12,2) UNSIGNED NOT NULL,
 stock_quantity int (10) UNSIGNED NOT NULL
@@ -34,7 +34,7 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Wooden Bookcase", "Furniture", 99.99, 50);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Bear rug", "Furniture", 129.99, 50);
+VALUES ("Bear rug", "Furniture", 129.99, 15);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Oxford shoes", "Clothing", 39.99, 50);
