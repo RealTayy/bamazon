@@ -2,9 +2,8 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 
-// Other stuff
+// Other imports
 var displayItems = require('./displayItems.js');
-var validator = require('./validator.js');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -16,7 +15,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log('Connected to "bamazon" with threadID:' + connection.threadId);
+    console.log(`Connected to "bamazon" with threadID:' ${connection.threadId}`);
     console.log('Connected as a Customer');
 
     // If connection doesn't run into an error then call promptChoices();
@@ -29,7 +28,7 @@ function promptChoices() {
         "SELECT * FROM products",
         function (err, results) {
             if (err) throw err;
-            console.log('Here is a list of our item...');
+            console.log('Here is a list of our items we have in stock...');
             displayItems(results);
 
             // Starts prompts
@@ -38,7 +37,7 @@ function promptChoices() {
                     {
                         type: "input",
                         name: "itemID",
-                        message: "Please enter the ID of the item you would like to buy",
+                        message: "Please enter the ID of the item you would like to buy:",
                         validate: function (input) {
                             if (!/[0-9]+/.test(input)) return 'That isn\'t a number. Please try again';
                             if (parseInt(input) > results.length) return 'That ID doesn\'t exist. Please try again';
@@ -48,18 +47,37 @@ function promptChoices() {
                     {
                         type: "input",
                         name: "quantity_buying",
-                        message: "Please enter the amount you would like to purchase",
-                        validate: validator.isNum
+                        message: function (answers) {
+                            return `Please enter the amount you would like to purchase [0-${results[answers.itemID - 1].stock_quantity}]:`
+                        },
+                        validate: function (input, answers) {
+                            if (!/[0-9]+/.test(input)) return 'That isn\'t a number. Please try again';
+                            var inStock = results[answers.itemID - 1].stock_quantity;
+                            if (inStock < parseInt(input)) return 'There\'s not enough in stock to buy that much! Try Again';
+                            return true;
+                        }
                     }
                 ])
                 .then(function (answers) {
                     // Attempts to buy item with user's answers
-                    buyItem(answers.itemID, answers.quantity_buying);
+                    buyItem(answers.itemID, answers.quantity_buying, results);
                 });
         }
     )
 }
 
-function buyItem(itemID, quantity) {
-    console.log(itemID, quantity);
+function buyItem(itemID, quantity_buying, data) {
+    var itemData = data[itemID - 1];
+    var numInStock = itemData.stock_quantity;
+    var newStock = numInStock - quantity_buying;
+    var totalCost = (quantity_buying * parseFloat(itemData.price)).toFixed(2);
+    connection.query(
+        "UPDATE products SET stock_quantity = ? WHERE id = ?",
+        [newStock, itemID],
+        function (err, results) {
+            if (err) throw err;
+            console.log(`Successfully bought (${quantity_buying}) "${itemData.product_name}" for $${totalCost}!`);
+            process.exit();
+        }
+    )
 }
