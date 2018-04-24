@@ -18,17 +18,12 @@ bamazon is a CLI that simulates sales for an online store. It contains 3 program
 
 # Installing & Running bamazon
 In order for Bamazon to run you will need the following:
-1. Bash
-2. Node.js & npm (npm is a native package of Node.js)
-3. MySQL Workbench
+* Bash
+* Node.js & npm (npm is a native package of Node.js)
+* MySQL Workbench
 
+1. Open bash and type `git clone https://github.com/RealTayy/bamazon.git` to pull bamazon off gitHub
 
-> $ git push origin master
-> Counting objects: 3, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (3/3), done.
-> Writing objects: 100% (3/3), 485 bytes | 242.00 KiB/s, done.
-> Total 3 (delta 2), reused 0 (delta 0)
-> remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
-> To https://github.com/RealTayy/bamazon.git
->    4674a0d..d683c00  master -> master
+![How To 1](images/how_to_1.png?raw=true)
+
+2. 
