@@ -3,21 +3,25 @@
 
 var { table } = require('table');
 
-module.exports = function displayItems(arr) {
-    if (arr === undefined || arr.length === 0) throw new Error("Array is empty or undefined");
+module.exports = function displayItems(dataArr, formatArr) {
+    if (dataArr === undefined || dataArr.length === 0) throw new Error("Array is empty or undefined");
 
     var options,
         data = [],
         output;
 
     // Grabs keys from arr[0] and pushes to data to use for table's header
-    data.push(Object.keys(arr[0]))
+    data.push(Object.keys(dataArr[0]))
 
     // Creates and pushes a newRow to data for each index in arr
-    arr.forEach(function (obj) {
+    dataArr.forEach(function (obj) {
         var newRow = [];
         for (var key in obj) {
-            if (key === 'price') newRow.push('$' + obj[key]);
+            // If key exist in format arr formats it to currency display
+            if (formatArr) {
+                if (formatArr.includes(key)) newRow.push('$' + obj[key].toFixed(2));
+                else newRow.push(obj[key]);
+            }
             else newRow.push(obj[key]);
         }
         data.push(newRow);

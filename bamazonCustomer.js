@@ -25,11 +25,11 @@ connection.connect(function (err) {
 // Prompts user for initial choice selection
 function promptChoices() {
     connection.query(
-        "SELECT * FROM products",
+        "SELECT id, product_name, department_name, price, stock_quantity FROM products",
         function (err, results) {
             if (err) throw err;
             console.log('Here is a list of our items we have in stock...');
-            displayItems(results);
+            displayItems(results, ['price', 'product_sales']);
 
             // Starts prompts
             inquirer
@@ -74,8 +74,8 @@ function buyItem(itemID, quantity_buying, data) {
     var newStock = numInStock - quantity_buying;
     var totalCost = (quantity_buying * parseFloat(itemData.price)).toFixed(2);
     connection.query(
-        "UPDATE products SET stock_quantity = ? WHERE id = ?",
-        [newStock, itemID],
+        "UPDATE products SET stock_quantity = ?, product_sales = product_sales + ? WHERE id = ?",
+        [newStock, totalCost, itemID],
         function (err, results) {
             if (err) throw err;
             console.log(`Successfully bought (${quantity_buying}) "${itemData.product_name}" for $${totalCost}!`);

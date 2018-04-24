@@ -29,7 +29,7 @@ function promptChoices() {
             {
                 type: 'list',
                 name: 'userChoice',
-                message: "Would would you like to do Mr. Manager?",
+                message: "What would you like to do Mr. Manager?",
                 choices: [
                     'View Products for Sale',
                     'View Low Inventory (<=20)',
@@ -37,7 +37,8 @@ function promptChoices() {
                     'Add New Product'
                 ]
             }
-        ]).then(
+        ])
+        .then(
             function (answers) {
                 switch (answers.userChoice) {
                     case 'View Products for Sale':
@@ -63,7 +64,8 @@ function viewProducts() {
         function (err, results) {
             if (err) throw err;
             console.log('Here is a list of our current items in stock...');
-            displayItems(results);
+            displayItems(results, ['price', 'product_sales']);
+            process.exit();
         }
     )
 }
@@ -78,8 +80,9 @@ function viewLowInventory() {
             }
             else {
                 console.log('Here is a list of our inventory with stock less then 20');
-                displayItems(results);
+                displayItems(results, ['price', 'product_sales']);
             }
+            process.exit();
         }
     )
 }
@@ -121,7 +124,7 @@ function promptAddStock() {
                         message: "Please enter the amount you would like to add:",
                         validate: function (input, answers) {
                             if (!/[0-9]+/.test(input)) return 'That isn\'t a number. Please try again';
-                            var inStock = results[answers.itemID - 1].stock_quantity;                            
+                            var inStock = results[answers.itemID - 1].stock_quantity;
                             return true;
                         }
                     },
@@ -147,13 +150,14 @@ function addStock(itemID, quantity_adding, data) {
             if (err) throw err;
             console.log(`Successfully added (${quantity_adding}) "${itemData.product_name}" to inventory
             New amount in stock: ${newStock}`);
+            process.exit();
         }
     )
 }
 
 function promptAddNewProduct() {
     connection.query(
-        "SELECT department_name FROM products GROUP BY department_name",
+        "SELECT department_name FROM departments GROUP BY department_name",
         function (err, results) {
             var departmentArr = [];
             results.forEach(function (obj) {
@@ -221,6 +225,7 @@ function addNewProduct(name, department, price, stock) {
         function (err, results) {
             if (err) throw err;
             console.log(`Successfully added ${name}(${stock}) into department "${department} at ${price}`)
+            process.exit();
         }
     )
 }
