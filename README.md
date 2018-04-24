@@ -24,18 +24,24 @@ In order for Bamazon to run you will need the following:
 
 1. Open bash and type `git clone https://github.com/RealTayy/bamazon.git` to pull bamazon off gitHub
 
-![How To 1](images/readme/how_to_1.png?raw=true)
+![How To 3](images/readme/how_to_1.png?raw=true)
 
 2. Then type `cd bamazon/; npm i` to go into the bamazon folder and install the required npm packages
 
+![How To 3](images/readme/how_to_2.png?raw=true)
+
 3. Open MySQL Workbench and connect to `localhost:3306`. After that open `bamazonSchema.sql` and run it. Once the schema has been loaded open `bamazonSeed.sql` and run that to finish loading the initial database/table/entires
+
+![How To 3](images/readme/how_to_3.png?raw=true)
 
 Congratulations! You have successfully installed bamazon
 
 # Demos
 ## Customer
-* Customer
-    * Can buy products from the store
+1. Running the bamazonCustomer.js
+![Customer 1](images/readme/cust_1.png?raw=true)
+
+
 
 ## Manager
 * Manager
