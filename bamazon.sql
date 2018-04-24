@@ -5,11 +5,12 @@ CREATE DATABASE IF NOT EXISTS bamazon;
 USE bamazon;
 
 CREATE TABLE products (
-id int UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE,
+id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 product_name VARCHAR(30) NOT NULL,
 department_name VARCHAR(30) NOT NULL,
-price dec(12,2) UNSIGNED NOT NULL,
-stock_quantity int (10) UNSIGNED NOT NULL
+price DEC(12,2) UNSIGNED NOT NULL,
+stock_quantity INT (10) UNSIGNED NOT NULL,
+product_sales DEC(20,2) UNSIGNED NOT NULL DEFAULT 0.00
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
@@ -49,3 +50,9 @@ INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Under Armor Socks", "Clothing", 4.99, 1000);
 
 SELECT * FROM products;
+
+CREATE TABLE departments (
+department_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+department_name VARCHAR(30) NOT NULL UNIQUE,
+over_head_costs DEC(20,2) UNSIGNED NOT NULL DEFAULT 0.00
+);

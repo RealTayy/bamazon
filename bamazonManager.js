@@ -121,8 +121,7 @@ function promptAddStock() {
                         message: "Please enter the amount you would like to add:",
                         validate: function (input, answers) {
                             if (!/[0-9]+/.test(input)) return 'That isn\'t a number. Please try again';
-                            var inStock = results[answers.itemID - 1].stock_quantity;
-                            if (inStock < parseInt(input)) return 'There\'s not enough in stock to buy that much! Try Again';
+                            var inStock = results[answers.itemID - 1].stock_quantity;                            
                             return true;
                         }
                     },
